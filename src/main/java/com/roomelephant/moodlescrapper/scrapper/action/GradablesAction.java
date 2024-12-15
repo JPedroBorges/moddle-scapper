@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,19 +27,28 @@ public class GradablesAction extends Actions {
     }
 
     private List<GradableDTO> extractGradables(WebDriver driver) {
-        List<WebElement> gradables = driver.findElements(By.className("gradable"));
-        return gradables.stream()
-                .map(gradable -> {
-                    String exercise = upperLevel(upperLevel(gradable)).findElement(By.className("grademe-mod-name")).getText();
-                    String link = gradable.findElement(By.className("gradable-icon")).getDomAttribute("href");
+        List<WebElement> modules = driver.findElements(By.className("module"));
 
-                    WebElement wrapper = gradable.findElement(By.className("gradable-wrap"));
-                    String name = wrapper.findElement(By.className("gradable-user")).getText();
-                    String date = wrapper.findElement(By.className("gradable-date")).getText();
+        return modules.stream().map(module -> {
+            WebElement moduleName = module.findElement(By.className("grademe-mod-name"));
+            String exercise = moduleName.getText();
 
-                    return new GradableDTO(link, name, date, exercise);
-                })
-                .toList();
+            List<WebElement> gradables = module.findElements(By.className("gradable"));
+            return gradables.stream()
+                    .map(gradable -> {
+                        WebElement linkElement = gradable.findElement(By.className("gradable-icon"));
+                        WebElement wrapper = gradable.findElement(By.className("gradable-wrap"));
+
+                        WebElement userElement = wrapper.findElement(By.className("gradable-user"));
+                        WebElement dateElement = wrapper.findElement(By.className("gradable-date"));
+
+                        String link = linkElement.getDomAttribute("href");
+                        String name = userElement.getText();
+                        String date = dateElement.getDomProperty("innerText");
+
+                        return new GradableDTO(link, name, date, exercise);
+                    })
+                    .toList();
+        }).flatMap(Collection::stream).toList();
     }
-
 }
