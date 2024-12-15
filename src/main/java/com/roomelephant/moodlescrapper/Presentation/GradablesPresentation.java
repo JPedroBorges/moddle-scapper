@@ -1,4 +1,4 @@
-package com.roomelephant.moodlescrapper.Presentation;
+package com.roomelephant.moodlescrapper.presentation;
 
 import com.roomelephant.moodlescrapper.model.Gradable;
 
@@ -7,10 +7,10 @@ import java.time.Period;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Map;
 
 public class GradablesPresentation {
-    public void presentGrdables(TreeMap<LocalDate, List<Gradable>> gradablesByDate) {
+    public void presentGrdables(Map<LocalDate, List<Gradable>> gradablesByDate) {
         LocalDate oneWeekBefore = LocalDate.now().minusWeeks(1);
 
 
@@ -20,13 +20,9 @@ public class GradablesPresentation {
         System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
 
-        TreeMap<LocalDate, List<Gradable>> finalGradablesByDate = gradablesByDate;
         gradablesByDate.keySet().
-
-                forEach(date ->
-
-                {
-                    List<Gradable> dailyGradable = finalGradablesByDate.get(date);
+                forEach(date -> {
+                    List<Gradable> dailyGradable = gradablesByDate.get(date);
                     Colors color = getColor(date, oneWeekBefore);
 
                     System.out.println("due: " + color.toString() + date.plusWeeks(1) + Colors.RESET + "\tsubmitted: " + date + "\t(" + dailyGradable.size() + ")");
@@ -34,7 +30,7 @@ public class GradablesPresentation {
 
                     dailyGradable.stream()
                             .sorted(Comparator.comparing(Gradable::exercise))
-                            .map(Gradable::toString)
+                            .map(this::gradable)
                             .forEach(System.out::println);
                 });
 
@@ -50,5 +46,15 @@ public class GradablesPresentation {
             case 2 -> Colors.YELLOW;
             default -> Colors.GREEN;
         };
+    }
+
+    public String gradable(Gradable gradable) {
+        return "\t" + fillSpaces(gradable.link().toString(), 75)
+                + "\t" + fillSpaces(gradable.name(), 40)
+                + "\t" + fillSpaces(gradable.exercise(), 30);
+    }
+
+    private String fillSpaces(String name, int num) {
+        return name + " ".repeat(Math.max(0, num - name.length()));
     }
 }

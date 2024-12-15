@@ -1,6 +1,6 @@
 package com.roomelephant.moodlescrapper.bean;
 
-import com.roomelephant.moodlescrapper.Presentation.GradablesPresentation;
+import com.roomelephant.moodlescrapper.presentation.GradablesPresentation;
 import com.roomelephant.moodlescrapper.configuration.EnvVariables;
 import com.roomelephant.moodlescrapper.converter.gradable.GradableConverter;
 import com.roomelephant.moodlescrapper.courses.CourseManagement;
@@ -8,10 +8,14 @@ import com.roomelephant.moodlescrapper.scrapper.Moodle;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LoggingPreferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.logging.Level;
 
 public class BeanManager {
+    private static final Logger logger = LoggerFactory.getLogger(BeanManager.class);
+
     private EnvVariables env;
     private ChromeDriver chromeDriver;
     private GradableConverter gradableConverter;
@@ -28,7 +32,7 @@ public class BeanManager {
 
     public ChromeDriver chromeDriver() {
         if (chromeDriver == null) {
-            System.out.println("creating chrome driver");
+            logger.debug("creating chrome driver");
             LoggingPreferences logs = new LoggingPreferences();
             logs.enable("browser", Level.OFF);  // Disable browser logs
 
@@ -36,8 +40,6 @@ public class BeanManager {
             ChromeOptions options = new ChromeOptions();
             options.setCapability("goog:loggingPrefs", logs);
             chromeDriver = new ChromeDriver(options);
-
-            chromeDriver.manage().window().maximize();
         }
         return chromeDriver;
     }

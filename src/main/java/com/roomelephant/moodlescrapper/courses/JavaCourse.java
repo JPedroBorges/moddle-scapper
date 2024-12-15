@@ -1,5 +1,6 @@
 package com.roomelephant.moodlescrapper.courses;
 
+import com.roomelephant.moodlescrapper.converter.Converter;
 import com.roomelephant.moodlescrapper.converter.gradable.GradableConverter;
 import com.roomelephant.moodlescrapper.model.Gradable;
 import com.roomelephant.moodlescrapper.scrapper.GradableDTO;
@@ -10,7 +11,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public final class JavaCourse implements Course {
-    private final GradableConverter gradableConverter;
+    private final Converter<GradableDTO, Gradable>  gradableConverter;
     private final List<GradableDTO> reviews;
 
     public JavaCourse(GradableConverter gradableConverter, List<GradableDTO> reviews) {
@@ -79,6 +80,7 @@ public final class JavaCourse implements Course {
             case "1. Animais" -> "M2 A6 E1 - Animais";
             case "1. Cidades" -> "M2 A7 E1 - Cidades";
             case "1. Tick-Tock" -> "M2 A9 E1 - Tick-Tock";
+            case "2. Produtor-Consumidor" -> "M2 A9 E2 - Produtor-Consumidor";
             case "1. Aniversário" -> "M2 A11 E1 - Aniversário";
             case "Entrega do Projeto Final" -> "Entrega do Projeto Final";
             case "Defesa do Projeto Final" -> "Defesa do Projeto Final";

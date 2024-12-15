@@ -1,4 +1,4 @@
-package com.roomelephant.moodlescrapper.Presentation;
+package com.roomelephant.moodlescrapper.presentation;
 
 public enum Colors {
     // Foreground colors
@@ -31,10 +31,6 @@ public enum Colors {
 
     Colors(String code) {
         this.code = code;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     @Override

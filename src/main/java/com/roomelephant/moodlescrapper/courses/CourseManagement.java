@@ -8,7 +8,7 @@ import com.roomelephant.moodlescrapper.scrapper.Moodle;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Map;
 
 public class CourseManagement {
     private final Moodle moodle;
@@ -21,14 +21,14 @@ public class CourseManagement {
         this.converter = converter;
     }
 
-    public TreeMap<LocalDate, List<Gradable>> getGradables() {
+    public Map<LocalDate, List<Gradable>> getGradables() {
         List<GradableDTO> reviews = moodle.getGradables(env.course());
         Course course = switch (env.course()) {
             case "12" -> new JavaCourse(converter, reviews);
             default -> new NoOPCourse();
         };
 
-        TreeMap<LocalDate, List<Gradable>> gradablesByDate = course.getReviews();
+        Map<LocalDate, List<Gradable>> gradablesByDate = course.getReviews();
 
         moodle.close();
 
