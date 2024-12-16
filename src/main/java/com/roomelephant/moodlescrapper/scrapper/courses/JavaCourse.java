@@ -1,7 +1,7 @@
 package com.roomelephant.moodlescrapper.scrapper.courses;
 
-import com.roomelephant.moodlescrapper.converter.Converter;
-import com.roomelephant.moodlescrapper.converter.gradable.GradableConverter;
+import com.roomelephant.moodlescrapper.scrapper.converter.Converter;
+import com.roomelephant.moodlescrapper.scrapper.converter.gradable.GradableConverter;
 import com.roomelephant.moodlescrapper.model.Gradable;
 import com.roomelephant.moodlescrapper.scrapper.GradableDTO;
 
@@ -24,7 +24,6 @@ public final class JavaCourse implements Course {
 
         return gradables.stream()
                 .filter(gradable -> !gradable.exercise().contains("Entregar objetivo definido"))
-                //.sorted(Comparator.comparing(Gradable::date))
                 .toList().stream()
                 .collect(Collectors.groupingBy(
                         gradable -> gradable.date().toLocalDate(),

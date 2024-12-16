@@ -1,7 +1,7 @@
 package com.roomelephant.moodlescrapper.scrapper.courses;
 
 import com.roomelephant.moodlescrapper.configuration.EnvVariables;
-import com.roomelephant.moodlescrapper.converter.gradable.GradableConverter;
+import com.roomelephant.moodlescrapper.scrapper.converter.gradable.GradableConverter;
 import com.roomelephant.moodlescrapper.model.Gradable;
 import com.roomelephant.moodlescrapper.scrapper.GradableDTO;
 

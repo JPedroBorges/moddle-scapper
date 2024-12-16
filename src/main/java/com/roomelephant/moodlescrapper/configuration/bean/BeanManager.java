@@ -2,9 +2,9 @@ package com.roomelephant.moodlescrapper.configuration.bean;
 
 import com.roomelephant.moodlescrapper.App;
 import com.roomelephant.moodlescrapper.configuration.EnvVariables;
-import com.roomelephant.moodlescrapper.converter.gradable.GradableConverter;
+import com.roomelephant.moodlescrapper.scrapper.converter.gradable.GradableConverter;
 import com.roomelephant.moodlescrapper.scrapper.courses.CourseManagement;
-import com.roomelephant.moodlescrapper.presentation.GradablesPresentation;
+import com.roomelephant.moodlescrapper.controller.GradablesPresentation;
 import com.roomelephant.moodlescrapper.scrapper.Moodle;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;

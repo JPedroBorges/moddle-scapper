@@ -20,6 +20,7 @@ public class Moodle {
     private final String sectionId;
     private final GradablesAction gradableAction;
     private final LoginAction loginAction;
+    private final MessageAction messageAction;
 
     private Moodle(WebDriver driver, String baseUrl, String username, String password, String sectionId) {
         this.driver = driver;
@@ -29,6 +30,7 @@ public class Moodle {
         this.sectionId = sectionId;
         this.loginAction = new LoginAction();
         this.gradableAction = new GradablesAction();
+        this.messageAction = new MessageAction();
     }
 
     public void login() throws LoginFailed {
@@ -39,6 +41,8 @@ public class Moodle {
         return gradableAction.getReviews(driver, baseUrl, courseId, sectionId);
     }
 
+    public List<MessageDTO> getMessages() {
+        return messageAction.getMessage(driver, baseUrl);
     }
 
     public void close() {

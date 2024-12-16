@@ -1,4 +1,4 @@
-package com.roomelephant.moodlescrapper.presentation;
+package com.roomelephant.moodlescrapper.controller;
 
 public enum Colors {
     // Foreground colors

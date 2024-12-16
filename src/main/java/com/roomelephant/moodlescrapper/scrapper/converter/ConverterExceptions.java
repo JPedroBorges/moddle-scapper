@@ -1,4 +1,4 @@
-package com.roomelephant.moodlescrapper.converter;
+package com.roomelephant.moodlescrapper.scrapper.converter;
 
 
 import com.roomelephant.moodlescrapper.scrapper.GradableDTO;

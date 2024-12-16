@@ -1,4 +1,4 @@
-package com.roomelephant.moodlescrapper.presentation;
+package com.roomelephant.moodlescrapper.controller;
 
 import com.roomelephant.moodlescrapper.model.Gradable;
 

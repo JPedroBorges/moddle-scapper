@@ -3,7 +3,7 @@ package com.roomelephant.moodlescrapper;
 import com.roomelephant.moodlescrapper.configuration.EnvVariables;
 import com.roomelephant.moodlescrapper.scrapper.courses.CourseManagement;
 import com.roomelephant.moodlescrapper.model.Gradable;
-import com.roomelephant.moodlescrapper.presentation.GradablesPresentation;
+import com.roomelephant.moodlescrapper.controller.GradablesPresentation;
 import com.roomelephant.moodlescrapper.scrapper.GradableDTO;
 import com.roomelephant.moodlescrapper.scrapper.MessageDTO;
 import com.roomelephant.moodlescrapper.scrapper.Moodle;

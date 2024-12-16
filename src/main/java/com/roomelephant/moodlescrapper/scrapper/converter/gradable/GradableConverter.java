@@ -1,7 +1,7 @@
-package com.roomelephant.moodlescrapper.converter.gradable;
+package com.roomelephant.moodlescrapper.scrapper.converter.gradable;
 
-import com.roomelephant.moodlescrapper.converter.Converter;
-import com.roomelephant.moodlescrapper.converter.ConverterExceptions;
+import com.roomelephant.moodlescrapper.scrapper.converter.Converter;
+import com.roomelephant.moodlescrapper.scrapper.converter.ConverterExceptions;
 import com.roomelephant.moodlescrapper.model.Gradable;
 import com.roomelephant.moodlescrapper.scrapper.GradableDTO;
 
