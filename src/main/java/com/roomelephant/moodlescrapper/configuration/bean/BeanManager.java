@@ -1,9 +1,10 @@
-package com.roomelephant.moodlescrapper.bean;
+package com.roomelephant.moodlescrapper.configuration.bean;
 
-import com.roomelephant.moodlescrapper.presentation.GradablesPresentation;
+import com.roomelephant.moodlescrapper.App;
 import com.roomelephant.moodlescrapper.configuration.EnvVariables;
 import com.roomelephant.moodlescrapper.converter.gradable.GradableConverter;
-import com.roomelephant.moodlescrapper.courses.CourseManagement;
+import com.roomelephant.moodlescrapper.scrapper.courses.CourseManagement;
+import com.roomelephant.moodlescrapper.presentation.GradablesPresentation;
 import com.roomelephant.moodlescrapper.scrapper.Moodle;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -22,6 +23,7 @@ public class BeanManager {
     private GradablesPresentation gradablesPresentation;
     private Moodle moodle;
     private CourseManagement courseManagement;
+    private App app;
 
     public EnvVariables env() {
         if (env == null) {
@@ -32,7 +34,7 @@ public class BeanManager {
 
     public ChromeDriver chromeDriver() {
         if (chromeDriver == null) {
-            logger.debug("creating chrome driver");
+            logger.debug("operation='chromeDriver', message='creating chrome driver'");
             LoggingPreferences logs = new LoggingPreferences();
             logs.enable("browser", Level.OFF);  // Disable browser logs
 
@@ -63,7 +65,7 @@ public class BeanManager {
             moodle = Moodle.builder()
                     .withBaseUrl(env().baseUrl())
                     .withUsername(env().username())
-                    .withPassword(env() .password())
+                    .withPassword(env().password())
                     .withDriver(chromeDriver())
                     .build();
         }
@@ -72,9 +74,16 @@ public class BeanManager {
 
     public CourseManagement courseManagement() {
         if (courseManagement == null) {
-            courseManagement = new CourseManagement(moodle(), env(), gradableConverter());
+            courseManagement = new CourseManagement(env(), gradableConverter());
         }
         return courseManagement;
+    }
+
+    public App app() {
+        if (app == null) {
+            app = new App(moodle(), env(), courseManagement(), gradablesPresentation());
+        }
+        return app;
     }
 
 }

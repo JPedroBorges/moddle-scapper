@@ -1,40 +1,45 @@
 package com.roomelephant.moodlescrapper;
 
-import com.roomelephant.moodlescrapper.presentation.GradablesPresentation;
-import com.roomelephant.moodlescrapper.bean.BeanManager;
-import com.roomelephant.moodlescrapper.courses.CourseManagement;
+import com.roomelephant.moodlescrapper.configuration.EnvVariables;
+import com.roomelephant.moodlescrapper.scrapper.courses.CourseManagement;
 import com.roomelephant.moodlescrapper.model.Gradable;
+import com.roomelephant.moodlescrapper.presentation.GradablesPresentation;
+import com.roomelephant.moodlescrapper.scrapper.GradableDTO;
+import com.roomelephant.moodlescrapper.scrapper.MessageDTO;
 import com.roomelephant.moodlescrapper.scrapper.Moodle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 public class App {
-    private static final Logger logger = LoggerFactory.getLogger(App.class);
+    private final Moodle moodle;
+    private final EnvVariables env;
+    private final CourseManagement courseManagement;
+    private final GradablesPresentation gradablesPresentation;
 
-    public static void main(String[] args) {
-        logger.debug("initializing beans");
-        BeanManager beanManager = new BeanManager();
+    public App(Moodle moodle, EnvVariables env, CourseManagement courseManagement, GradablesPresentation gradablesPresentation) {
+        this.moodle = moodle;
+        this.env = env;
+        this.courseManagement = courseManagement;
+        this.gradablesPresentation = gradablesPresentation;
+    }
 
-        Moodle moodle = beanManager.moodle();
-        CourseManagement courseManagement = beanManager.courseManagement();
-        GradablesPresentation gradablesPresentation = beanManager.gradablesPresentation();
-
-        Map<LocalDate, List<Gradable>> gradables;
-
+    public void launch() {
+        List<MessageDTO> messagesDTO;
+        List<GradableDTO> gradablesDTO;
         try {
-            logger.debug("logging in platform");
-            moodle.init();
-            logger.debug("getting gradables");
-            gradables = courseManagement.getGradables();
+            moodle.login();
+
+            messagesDTO = moodle.getMessages();
+            gradablesDTO = moodle.getGradables(env.course());
         } finally {
             moodle.close();
         }
 
-        logger.debug("presenting gradables");
+        System.out.println(messagesDTO);
+
+        Map<LocalDate, List<Gradable>> gradables = courseManagement.getGradables(gradablesDTO);
         gradablesPresentation.presentGrdables(gradables);
     }
 }

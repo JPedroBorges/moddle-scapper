@@ -1,4 +1,4 @@
-package com.roomelephant.moodlescrapper.scrapper.action;
+package com.roomelephant.moodlescrapper.scrapper.moodle.action;
 
 import org.openqa.selenium.WebDriver;
 

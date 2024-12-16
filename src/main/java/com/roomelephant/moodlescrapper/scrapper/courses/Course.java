@@ -1,7 +1,7 @@
-package com.roomelephant.moodlescrapper.courses;
+package com.roomelephant.moodlescrapper.scrapper.courses;
 
 import com.roomelephant.moodlescrapper.model.Gradable;
-import com.roomelephant.moodlescrapper.scrapper.exceptions.DisplayGradesNotFound;
+import com.roomelephant.moodlescrapper.scrapper.moodle.exceptions.DisplayGradesNotFound;
 
 import java.time.LocalDate;
 import java.util.List;

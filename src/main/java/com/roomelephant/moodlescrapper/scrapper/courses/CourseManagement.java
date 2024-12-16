@@ -1,37 +1,29 @@
-package com.roomelephant.moodlescrapper.courses;
+package com.roomelephant.moodlescrapper.scrapper.courses;
 
 import com.roomelephant.moodlescrapper.configuration.EnvVariables;
 import com.roomelephant.moodlescrapper.converter.gradable.GradableConverter;
 import com.roomelephant.moodlescrapper.model.Gradable;
 import com.roomelephant.moodlescrapper.scrapper.GradableDTO;
-import com.roomelephant.moodlescrapper.scrapper.Moodle;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 public class CourseManagement {
-    private final Moodle moodle;
     private final EnvVariables env;
     private final GradableConverter converter;
 
-    public CourseManagement(Moodle moodle, EnvVariables env, GradableConverter converter) {
-        this.moodle = moodle;
+    public CourseManagement(EnvVariables env, GradableConverter converter) {
         this.env = env;
         this.converter = converter;
     }
 
-    public Map<LocalDate, List<Gradable>> getGradables() {
-        List<GradableDTO> reviews = moodle.getGradables(env.course());
+    public Map<LocalDate, List<Gradable>> getGradables(List<GradableDTO> reviews) {
         Course course = switch (env.course()) {
             case "12" -> new JavaCourse(converter, reviews);
             default -> new NoOPCourse();
         };
 
-        Map<LocalDate, List<Gradable>> gradablesByDate = course.getReviews();
-
-        moodle.close();
-
-        return gradablesByDate;
+        return course.getReviews();
     }
 }

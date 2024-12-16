@@ -1,4 +1,4 @@
-package com.roomelephant.moodlescrapper.courses;
+package com.roomelephant.moodlescrapper.scrapper.courses;
 
 import com.roomelephant.moodlescrapper.converter.Converter;
 import com.roomelephant.moodlescrapper.converter.gradable.GradableConverter;
