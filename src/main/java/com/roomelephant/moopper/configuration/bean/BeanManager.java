@@ -4,7 +4,7 @@ import com.roomelephant.moopper.App;
 import com.roomelephant.moopper.configuration.EnvVariables;
 import com.roomelephant.moopper.scrapper.converter.gradable.GradableConverter;
 import com.roomelephant.moopper.services.courses.CourseManagement;
-import com.roomelephant.moopper.controller.GradablesPresentation;
+import com.roomelephant.moopper.controller.GradablesController;
 import com.roomelephant.moopper.scrapper.Moodle;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -20,7 +20,7 @@ public class BeanManager {
     private EnvVariables env;
     private ChromeDriver chromeDriver;
     private GradableConverter gradableConverter;
-    private GradablesPresentation gradablesPresentation;
+    private GradablesController gradablesController;
     private Moodle moodle;
     private CourseManagement courseManagement;
     private App app;
@@ -34,7 +34,7 @@ public class BeanManager {
 
     public ChromeDriver chromeDriver() {
         if (chromeDriver == null) {
-            logger.debug("operation='chromeDriver', message='creating chrome driver'");
+            logger.debug("operation=chromeDriver, message='creating chrome driver'");
             LoggingPreferences logs = new LoggingPreferences();
             logs.enable("browser", Level.OFF);  // Disable browser logs
 
@@ -53,11 +53,11 @@ public class BeanManager {
         return gradableConverter;
     }
 
-    public GradablesPresentation gradablesPresentation() {
-        if (gradablesPresentation == null) {
-            gradablesPresentation = new GradablesPresentation();
+    public GradablesController gradablesPresentation() {
+        if (gradablesController == null) {
+            gradablesController = new GradablesController();
         }
-        return gradablesPresentation;
+        return gradablesController;
     }
 
     public Moodle moodle() {

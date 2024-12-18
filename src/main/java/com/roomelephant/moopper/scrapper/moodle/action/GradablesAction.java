@@ -16,7 +16,7 @@ public class GradablesAction extends Actions {
     private static final Logger logger = LoggerFactory.getLogger(GradablesAction.class);
 
     public List<GradableDTO> getReviews(WebDriver driver, String baseUrl, String courseId, String sectionId) {
-        logger.debug("operation='getReviews', message='Navigating to course page'");
+        logger.debug("operation=getReviews, message='Navigating to course page'");
         navigateCoursePage(driver, baseUrl, courseId, sectionId);
         clickDisplayButton(driver);
         return extractGradables(driver);
@@ -32,11 +32,11 @@ public class GradablesAction extends Actions {
     }
 
     private List<GradableDTO> extractGradables(WebDriver driver) {
-        logger.debug("operation='extractGradables', message='Exacting gradable'");
+        logger.debug("operation=extractGradables, message='Exacting gradable'");
         List<WebElement> modules = driver.findElements(By.className("module"));
 
         return modules.stream().map(module -> {
-            String exercise = module.findElement(By.className("grademe-mod-name")).getText();
+            String exercise = module.findElement(By.className("grademe-mod-name")).getDomProperty("innerText");
 
             List<WebElement> gradables = module.findElements(By.className("gradable"));
             return gradables.stream()
@@ -44,7 +44,7 @@ public class GradablesAction extends Actions {
                         WebElement wrapper = gradable.findElement(By.className("gradable-wrap"));
 
                         String link = gradable.findElement(By.className("gradable-icon")).getDomAttribute("href");
-                        String name = wrapper.findElement(By.className("gradable-user")).getText();
+                        String name = wrapper.findElement(By.className("gradable-user")).getDomProperty("innerText");
                         String date = wrapper.findElement(By.className("gradable-date")).getDomProperty("innerText");
 
                         return new GradableDTO(link, name, date, exercise);

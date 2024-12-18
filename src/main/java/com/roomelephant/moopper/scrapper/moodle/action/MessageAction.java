@@ -13,7 +13,7 @@ public class MessageAction extends Actions {
     private static final Logger logger = LoggerFactory.getLogger(MessageAction.class);
 
     public List<MessageDTO> getMessage(WebDriver driver, String baseUrl) {
-        logger.debug("operation='getMessage', message='Navigating to message page'");
+        logger.debug("operation=getMessage, message='Navigating to message page'");
         driver.get(baseUrl + "blocks/itop_mailbox/view.php?type=inbox&filter=0");
 
         List<WebElement> unreadDivs = driver.findElements(By.className("unread"));

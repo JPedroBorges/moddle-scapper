@@ -13,7 +13,7 @@ public class LoginAction extends Actions {
     private static final Logger logger = LoggerFactory.getLogger(LoginAction.class);
 
     public void login(WebDriver driver, String baseUrl, String username, String password) {
-        logger.debug("operation='login', message='Starting to login'");
+        logger.debug("operation=login, message='Starting to login'");
         driver.get(baseUrl + "login/index.php");
 
         WebElement usernameField = driver.findElement(By.id("username"));
@@ -25,9 +25,9 @@ public class LoginAction extends Actions {
         loginButton.click();
 
         if (!Objects.requireNonNull(driver.getCurrentUrl()).contains("my")) {
-            logger.error("operation='login', message='Could not login. Or redirect page is incorrect', url='{}'", driver.getCurrentUrl());
+            logger.error("operation=login, message='Could not login. Or redirect page is incorrect', url='{}'", driver.getCurrentUrl());
             throw new LoginFailed();
         }
-        logger.debug("operation='login', message='Login successful'");
+        logger.debug("operation=login, message='Login successful'");
     }
 }
