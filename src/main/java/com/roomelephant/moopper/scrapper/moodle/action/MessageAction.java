@@ -23,11 +23,13 @@ public class MessageAction extends Actions {
 
             WebElement outterdiv = element.findElement(By.xpath("./*[1]"));
 
-            String name = outterdiv.findElement(By.xpath("./*[1]")).getDomAttribute("href");
+            WebElement message = outterdiv.findElement(By.xpath("./*[1]"));
+            String url = baseUrl + "blocks/itop_mailbox/" + message.getDomAttribute("href");
+            String name = message.getDomProperty("innerText");
             String subject = parentDiv.findElement(By.className("mailbox-subject")).getText();
             String date = parentDiv.findElement(By.className("mailbox-date")).getText();
 
-            return new MessageDTO(name, subject, date);
+            return new MessageDTO(url, name, subject, date);
 
         }).toList();
     }

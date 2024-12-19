@@ -2,10 +2,13 @@ package com.roomelephant.moopper.configuration.bean;
 
 import com.roomelephant.moopper.App;
 import com.roomelephant.moopper.configuration.EnvVariables;
+import com.roomelephant.moopper.controller.MessageController;
 import com.roomelephant.moopper.scrapper.converter.gradable.GradableConverter;
+import com.roomelephant.moopper.scrapper.converter.gradable.MessageConverter;
 import com.roomelephant.moopper.services.courses.CourseManagement;
 import com.roomelephant.moopper.controller.GradablesController;
 import com.roomelephant.moopper.scrapper.Moodle;
+import com.roomelephant.moopper.services.messages.MessageManagement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -20,9 +23,12 @@ public class BeanManager {
     private EnvVariables env;
     private ChromeDriver chromeDriver;
     private GradableConverter gradableConverter;
+    private MessageConverter messageConverter;
     private GradablesController gradablesController;
+    private MessageController messageController;
     private Moodle moodle;
     private CourseManagement courseManagement;
+    private MessageManagement messageManagement;
     private App app;
 
     public EnvVariables env() {
@@ -52,12 +58,25 @@ public class BeanManager {
         }
         return gradableConverter;
     }
+    public MessageConverter messageConverter() {
+        if (messageConverter == null) {
+            messageConverter = new MessageConverter();
+        }
+        return messageConverter;
+    }
 
-    public GradablesController gradablesPresentation() {
+    public GradablesController gradablesController() {
         if (gradablesController == null) {
             gradablesController = new GradablesController();
         }
         return gradablesController;
+    }
+
+    public MessageController messageController() {
+        if (messageController == null) {
+            messageController = new MessageController();
+        }
+        return messageController;
     }
 
     public Moodle moodle() {
@@ -79,9 +98,16 @@ public class BeanManager {
         return courseManagement;
     }
 
+    public MessageManagement messageManagement() {
+        if (messageManagement == null) {
+            messageManagement = new MessageManagement(messageConverter());
+        }
+        return messageManagement;
+    }
+
     public App app() {
         if (app == null) {
-            app = new App(moodle(), env(), courseManagement(), gradablesPresentation());
+            app = new App(moodle(), env(), courseManagement(), messageManagement(), gradablesController(), messageController());
         }
         return app;
     }

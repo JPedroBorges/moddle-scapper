@@ -1,6 +1,7 @@
 package com.roomelephant.moopper.services.courses;
 
 import com.roomelephant.moopper.configuration.EnvVariables;
+import com.roomelephant.moopper.scrapper.converter.Converter;
 import com.roomelephant.moopper.scrapper.converter.gradable.GradableConverter;
 import com.roomelephant.moopper.model.Gradable;
 import com.roomelephant.moopper.scrapper.GradableDTO;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 public class CourseManagement {
     private final EnvVariables env;
-    private final GradableConverter converter;
+    private final Converter<GradableDTO, Gradable> converter;
 
     public CourseManagement(EnvVariables env, GradableConverter converter) {
         this.env = env;

@@ -14,7 +14,7 @@ public final class JavaCourse implements Course {
     private final Converter<GradableDTO, Gradable>  gradableConverter;
     private final List<GradableDTO> reviews;
 
-    public JavaCourse(GradableConverter gradableConverter, List<GradableDTO> reviews) {
+    public JavaCourse(Converter<GradableDTO, Gradable> gradableConverter, List<GradableDTO> reviews) {
         this.gradableConverter = gradableConverter;
         this.reviews = reviews;
     }
