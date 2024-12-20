@@ -9,7 +9,7 @@ import java.util.Map;
 public abstract class AbstractController<T extends Map<LocalDate, List<S>>, S> {
 
     protected static final int URL_MAX_LENGTH = 82;
-    protected static final int NAME_MAX_LENGTH = 42;
+    protected static final int NAME_MAX_LENGTH = 44;
     protected static final int EXERCISE_MAX_LENGTH = 30;
     protected static final String TAB = " ".repeat(4);
     protected static final String TABLE_SEPARATOR = "-".repeat(TAB.length() + URL_MAX_LENGTH + TAB.length() + NAME_MAX_LENGTH + TAB.length() + EXERCISE_MAX_LENGTH);
@@ -19,6 +19,8 @@ public abstract class AbstractController<T extends Map<LocalDate, List<S>>, S> {
         pintBody(elements);
         printFooter();
     }
+
+    public abstract void close();
 
     private void printHeader(T elements) {
         System.out.println(TABLE_SEPARATOR);

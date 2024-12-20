@@ -1,4 +1,4 @@
-package com.roomelephant.moopper.scrapper.converter;
+package com.roomelephant.moopper.adapter.scrapper.converter;
 
 public class ConverterExceptions extends RuntimeException {
     public ConverterExceptions(String field, Object original, Exception e) {

@@ -1,7 +1,7 @@
-package com.roomelephant.moopper.scrapper.moodle.action;
+package com.roomelephant.moopper.adapter.scrapper.moodle.action;
 
-import com.roomelephant.moopper.scrapper.GradableDTO;
-import com.roomelephant.moopper.scrapper.moodle.exceptions.DisplayGradesNotFound;
+import com.roomelephant.moopper.adapter.scrapper.GradableDTO;
+import com.roomelephant.moopper.adapter.scrapper.moodle.exceptions.DisplayGradesNotFound;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

@@ -11,6 +11,11 @@ public class MessageController extends AbstractController<Map<LocalDate, List<Me
     private static final String TOTAL_GRADABLES = "Total messages: ";
 
     @Override
+    public void close() {
+        // Nothing to do
+    }
+
+    @Override
     protected void headerSpecifics(Map<LocalDate, List<Message>> messagesByDate) {
         System.out.println(TOTAL_GRADABLES + elementsCount(messagesByDate));
         System.out.println(Colors.BOLD

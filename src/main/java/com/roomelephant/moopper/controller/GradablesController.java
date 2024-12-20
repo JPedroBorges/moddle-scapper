@@ -3,13 +3,28 @@ package com.roomelephant.moopper.controller;
 import com.roomelephant.moopper.model.Gradable;
 
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class GradablesController extends AbstractController<Map<LocalDate, List<Gradable>>, Gradable> {
+public class GradablesController extends AbstractController<Map<LocalDate, List<Gradable>>, Gradable> implements AutoCloseable {
 
     private static final String TOTAL_GRADABLES = "Total gradables: ";
+    private static final Set<String> EXIT_TOKENS = Set.of("q", ":q", "Q", ":Q", "ZZ");
+    private final Scanner scanner;
+    private boolean iterable;
+
+    public GradablesController() {
+        this.scanner = new Scanner(System.in);
+        this.iterable = false;
+    }
+
+    @Override
+    public void close() {
+        scanner.close();
+    }
+
+    public void setIterable(boolean iterable) {
+        this.iterable = iterable;
+    }
 
     @Override
     protected void headerSpecifics(Map<LocalDate, List<Gradable>> gradablesByDate) {
@@ -22,19 +37,33 @@ public class GradablesController extends AbstractController<Map<LocalDate, List<
     @Override
     protected void pintBody(Map<LocalDate, List<Gradable>> gradablesByDate) {
         LocalDate oneWeekBefore = LocalDate.now().minusWeeks(1);
-        gradablesByDate.keySet()
-                .forEach(date -> {
-                    List<Gradable> dailyGradable = gradablesByDate.get(date);
-                    Colors color = getColor(date, oneWeekBefore);
+        try {
+            gradablesByDate.keySet()
+                    .forEach(date -> {
+                        List<Gradable> dailyGradable = gradablesByDate.get(date);
+                        Colors color = getColor(date, oneWeekBefore);
 
-                    System.out.println("due: " + color.toString() + date.plusWeeks(1) + Colors.RESET
-                            + "\tsubmitted: " + date + "\t(" + dailyGradable.size() + ")");
+                        if (iterable) {
+                            if (color.equals(Colors.YELLOW) || color.equals(Colors.GREEN)) {
+                                System.out.print(":");
+                                String input = scanner.nextLine();
+                                if (EXIT_TOKENS.contains(input)) {
+                                    throw new RuntimeException();
+                                }
+                            }
 
-                    dailyGradable.stream()
-                            .sorted(Comparator.comparing(Gradable::exercise))
-                            .map(this::gradable)
-                            .forEach(System.out::println);
-                });
+                        }
+
+                        System.out.println("due: " + color.toString() + date.plusWeeks(1) + Colors.RESET
+                                + "\tsubmitted: " + date + "\t(" + dailyGradable.size() + ")");
+
+                        dailyGradable.stream()
+                                .sorted(Comparator.comparing(Gradable::exercise))
+                                .map(this::gradable)
+                                .forEach(System.out::println);
+                    });
+        } catch (RuntimeException ignored) {
+        }
     }
 
     public String gradable(Gradable gradable) {

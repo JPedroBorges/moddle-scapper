@@ -1,9 +1,8 @@
 package com.roomelephant.moopper.services.courses;
 
-import com.roomelephant.moopper.scrapper.converter.Converter;
-import com.roomelephant.moopper.scrapper.converter.gradable.GradableConverter;
+import com.roomelephant.moopper.adapter.scrapper.converter.Converter;
 import com.roomelephant.moopper.model.Gradable;
-import com.roomelephant.moopper.scrapper.GradableDTO;
+import com.roomelephant.moopper.adapter.scrapper.GradableDTO;
 
 import java.time.LocalDate;
 import java.util.List;

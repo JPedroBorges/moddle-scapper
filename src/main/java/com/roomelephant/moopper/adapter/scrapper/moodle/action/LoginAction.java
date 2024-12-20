@@ -1,6 +1,6 @@
-package com.roomelephant.moopper.scrapper.moodle.action;
+package com.roomelephant.moopper.adapter.scrapper.moodle.action;
 
-import com.roomelephant.moopper.scrapper.moodle.exceptions.LoginFailed;
+import com.roomelephant.moopper.adapter.scrapper.moodle.exceptions.LoginFailed;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

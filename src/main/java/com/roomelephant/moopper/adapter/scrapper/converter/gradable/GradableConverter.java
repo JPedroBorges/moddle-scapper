@@ -1,9 +1,9 @@
-package com.roomelephant.moopper.scrapper.converter.gradable;
+package com.roomelephant.moopper.adapter.scrapper.converter.gradable;
 
-import com.roomelephant.moopper.model.Message;
-import com.roomelephant.moopper.scrapper.MessageDTO;
-import com.roomelephant.moopper.scrapper.converter.Converter;
-import com.roomelephant.moopper.scrapper.converter.ConverterExceptions;
+import com.roomelephant.moopper.adapter.scrapper.converter.Converter;
+import com.roomelephant.moopper.adapter.scrapper.converter.ConverterExceptions;
+import com.roomelephant.moopper.model.Gradable;
+import com.roomelephant.moopper.adapter.scrapper.GradableDTO;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -16,13 +16,13 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.Locale;
 
-public class MessageConverter implements Converter<MessageDTO, Message> {
+public class GradableConverter implements Converter<GradableDTO, Gradable> {
     @Override
-    public Message convert(MessageDTO dto) {
+    public Gradable convert(GradableDTO dto) {
         String finalName;
         URL finalUrl;
         LocalDateTime finalDate;
-        String finalSubject;
+        String finalExercise;
         try {
             finalName = getName(dto);
         } catch (Exception e) {
@@ -31,7 +31,7 @@ public class MessageConverter implements Converter<MessageDTO, Message> {
         try {
             finalUrl = getUrl(dto);
         } catch (Exception e) {
-            throw new ConverterExceptions("link", dto, e);
+            throw new ConverterExceptions("url", dto, e);
         }
         try {
             finalDate = getDate(dto);
@@ -39,31 +39,31 @@ public class MessageConverter implements Converter<MessageDTO, Message> {
             throw new ConverterExceptions("date", dto, e);
         }
         try {
-            finalSubject = dto.subject();
+            finalExercise = dto.exercise();
         } catch (Exception e) {
             throw new ConverterExceptions("exercise", dto, e);
         }
 
-        return new Message(finalUrl, finalName, finalSubject, finalDate);
+        return new Gradable(finalUrl, finalName, finalDate, finalExercise);
     }
 
-    private static String getName(MessageDTO dto) {
+    private static String getName(GradableDTO dto) {
         String finalName;
         finalName = dto.name().replace(" ", "_");
         return finalName;
     }
 
-    private static LocalDateTime getDate(MessageDTO dto) {
+    private static LocalDateTime getDate(GradableDTO dto) {
         LocalDateTime finalDate;
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                .appendPattern("d 'de' MMMM 'de' yyyy 'às' HH:mm")
-                .parseDefaulting(ChronoField.YEAR, LocalDateTime.now().getYear())
+                .appendPattern("MMMM d, h:mm a")
+                .parseDefaulting(ChronoField.YEAR, LocalDate.now().getYear())
                 .toFormatter(Locale.forLanguageTag("pt"));
-        finalDate = LocalDateTime.parse(dto.date().split(", ")[1], formatter);
+        finalDate = LocalDateTime.parse(dto.date(), formatter);
         return finalDate;
     }
 
-    private static URL getUrl(MessageDTO dto) throws URISyntaxException, MalformedURLException {
+    private static URL getUrl(GradableDTO dto) throws URISyntaxException, MalformedURLException {
         URL finalUrl;
         URI uri = new URI(dto.link());
         finalUrl = uri.toURL();

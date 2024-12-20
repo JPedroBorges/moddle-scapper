@@ -3,12 +3,12 @@ package com.roomelephant.moopper.configuration.bean;
 import com.roomelephant.moopper.App;
 import com.roomelephant.moopper.configuration.EnvVariables;
 import com.roomelephant.moopper.controller.MessageController;
-import com.roomelephant.moopper.scrapper.converter.gradable.GradableConverter;
-import com.roomelephant.moopper.scrapper.converter.gradable.MessageConverter;
-import com.roomelephant.moopper.services.courses.CourseManagement;
+import com.roomelephant.moopper.adapter.scrapper.converter.gradable.GradableConverter;
+import com.roomelephant.moopper.adapter.scrapper.converter.gradable.MessageConverter;
+import com.roomelephant.moopper.services.courses.CourseService;
 import com.roomelephant.moopper.controller.GradablesController;
-import com.roomelephant.moopper.scrapper.Moodle;
-import com.roomelephant.moopper.services.messages.MessageManagement;
+import com.roomelephant.moopper.adapter.scrapper.Moodle;
+import com.roomelephant.moopper.services.messages.MessageService;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.logging.Level;
 
-public class BeanManager {
-    private static final Logger logger = LoggerFactory.getLogger(BeanManager.class);
+public class BeanFactory {
+    private static final Logger logger = LoggerFactory.getLogger(BeanFactory.class);
 
     private EnvVariables env;
     private ChromeDriver chromeDriver;
@@ -27,8 +27,8 @@ public class BeanManager {
     private GradablesController gradablesController;
     private MessageController messageController;
     private Moodle moodle;
-    private CourseManagement courseManagement;
-    private MessageManagement messageManagement;
+    private CourseService courseService;
+    private MessageService messageService;
     private App app;
 
     public EnvVariables env() {
@@ -91,23 +91,23 @@ public class BeanManager {
         return moodle;
     }
 
-    public CourseManagement courseManagement() {
-        if (courseManagement == null) {
-            courseManagement = new CourseManagement(env(), gradableConverter());
+    public CourseService courseService() {
+        if (courseService == null) {
+            courseService = new CourseService(moodle(), env(), gradableConverter());
         }
-        return courseManagement;
+        return courseService;
     }
 
-    public MessageManagement messageManagement() {
-        if (messageManagement == null) {
-            messageManagement = new MessageManagement(messageConverter());
+    public MessageService messageService() {
+        if (messageService == null) {
+            messageService = new MessageService(moodle(), messageConverter());
         }
-        return messageManagement;
+        return messageService;
     }
 
     public App app() {
         if (app == null) {
-            app = new App(moodle(), env(), courseManagement(), messageManagement(), gradablesController(), messageController());
+            app = new App(moodle(), env(), courseService(), messageService(), gradablesController(), messageController());
         }
         return app;
     }

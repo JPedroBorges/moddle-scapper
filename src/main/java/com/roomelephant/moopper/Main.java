@@ -1,12 +1,12 @@
 package com.roomelephant.moopper;
 
-import com.roomelephant.moopper.configuration.bean.BeanManager;
+import com.roomelephant.moopper.configuration.bean.BeanFactory;
 
 public class Main {
     public static void main(String[] args) {
-        BeanManager beanManager = new BeanManager();
+        BeanFactory beanFactory = new BeanFactory();
 
-        App app = beanManager.app();
+        App app = beanFactory.app();
         app.launch();
     }
 }

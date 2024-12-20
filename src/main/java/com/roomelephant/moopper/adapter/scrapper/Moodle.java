@@ -1,16 +1,16 @@
-package com.roomelephant.moopper.scrapper;
+package com.roomelephant.moopper.adapter.scrapper;
 
-import com.roomelephant.moopper.scrapper.moodle.action.GradablesAction;
-import com.roomelephant.moopper.scrapper.moodle.action.LoginAction;
-import com.roomelephant.moopper.scrapper.moodle.action.MessageAction;
-import com.roomelephant.moopper.scrapper.moodle.exceptions.LoginFailed;
+import com.roomelephant.moopper.adapter.scrapper.moodle.action.GradablesAction;
+import com.roomelephant.moopper.adapter.scrapper.moodle.action.LoginAction;
+import com.roomelephant.moopper.adapter.scrapper.moodle.action.MessageAction;
+import com.roomelephant.moopper.adapter.scrapper.moodle.exceptions.LoginFailed;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class Moodle {
+public class Moodle implements com.roomelephant.moopper.adapter.Moodle {
     private static final Logger logger = LoggerFactory.getLogger(Moodle.class);
 
     private final WebDriver driver;
