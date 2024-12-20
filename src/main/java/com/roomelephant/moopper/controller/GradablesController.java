@@ -4,6 +4,7 @@ import com.roomelephant.moopper.model.Gradable;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GradablesController extends AbstractController<Map<LocalDate, List<Gradable>>, Gradable> implements AutoCloseable {
 
@@ -36,20 +37,20 @@ public class GradablesController extends AbstractController<Map<LocalDate, List<
 
     @Override
     protected void pintBody(Map<LocalDate, List<Gradable>> gradablesByDate) {
+        AtomicBoolean shouldContinue = new AtomicBoolean(true);
+
         LocalDate oneWeekBefore = LocalDate.now().minusWeeks(1);
         try {
             gradablesByDate.keySet()
                     .forEach(date -> {
+                        if (!shouldContinue.get()) return;
+
                         List<Gradable> dailyGradable = gradablesByDate.get(date);
                         Colors color = getColor(date, oneWeekBefore);
 
                         if (iterable) {
                             if (color.equals(Colors.YELLOW) || color.equals(Colors.GREEN)) {
-                                System.out.print(":");
-                                String input = scanner.nextLine();
-                                if (EXIT_TOKENS.contains(input)) {
-                                    throw new RuntimeException();
-                                }
+                                waitFeedback(shouldContinue);
                             }
 
                         }
@@ -64,6 +65,16 @@ public class GradablesController extends AbstractController<Map<LocalDate, List<
                     });
         } catch (RuntimeException ignored) {
         }
+    }
+
+    private void waitFeedback(AtomicBoolean shouldContinue) {
+        System.out.print(":");
+        String input = scanner.nextLine();
+        if (EXIT_TOKENS.contains(input)) {
+            shouldContinue.set(false);
+        }
+        System.out.print("\033[1A");
+        System.out.print("\033[2K");
     }
 
     public String gradable(Gradable gradable) {

@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.logging.Level;
 
-public class BeanFactory {
-    private static final Logger logger = LoggerFactory.getLogger(BeanFactory.class);
+public class BeanManager {
+    private static final Logger logger = LoggerFactory.getLogger(BeanManager.class);
 
     private EnvVariables env;
     private ChromeDriver chromeDriver;
