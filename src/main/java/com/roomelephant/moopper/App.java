@@ -8,12 +8,18 @@ import com.roomelephant.moopper.model.Gradable;
 import com.roomelephant.moopper.model.Message;
 import com.roomelephant.moopper.services.courses.CourseService;
 import com.roomelephant.moopper.services.messages.MessageService;
+import com.roomelephant.moopper.services.paths.PathsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class App {
+    private static final Logger log = LoggerFactory.getLogger(App.class);
+
     private final Moodle moodle;
     private final EnvVariables env;
     private final CourseService courseService;
@@ -31,6 +37,8 @@ public class App {
     }
 
     public void launch() {
+        for (int i = 0; i < 50; ++i) System.out.println();
+
         Map<LocalDate, List<Message>> messages;
         Map<LocalDate, List<Gradable>> gradables;
         try {
@@ -42,10 +50,15 @@ public class App {
             moodle.close();
         }
 
+        PathsService pathsService = new PathsService();
+        pathsService.createPaths(gradables.values().stream().flatMap(List::stream).collect(Collectors.toList()));
+
         messageController.show(messages);
 
         gradablesController.setIterable(Boolean.parseBoolean(env.interactive()));
         gradablesController.show(gradables);
 
     }
+
+
 }
