@@ -1,4 +1,4 @@
-# moddle-scapper
+# moopper
 
 **⚠️ This project is not actively maintained.**
 
