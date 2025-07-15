@@ -1,13 +1,13 @@
 package com.roomelephant.moopper.configuration.bean;
 
 import com.roomelephant.moopper.App;
-import com.roomelephant.moopper.configuration.EnvVariables;
-import com.roomelephant.moopper.controller.MessageController;
+import com.roomelephant.moopper.adapter.scrapper.Moodle;
 import com.roomelephant.moopper.adapter.scrapper.converter.gradable.GradableConverter;
 import com.roomelephant.moopper.adapter.scrapper.converter.gradable.MessageConverter;
-import com.roomelephant.moopper.services.courses.CourseService;
+import com.roomelephant.moopper.configuration.EnvVariables;
 import com.roomelephant.moopper.controller.GradablesController;
-import com.roomelephant.moopper.adapter.scrapper.Moodle;
+import com.roomelephant.moopper.controller.MessageController;
+import com.roomelephant.moopper.services.courses.CourseService;
 import com.roomelephant.moopper.services.messages.MessageService;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.logging.Level;
 
-public class BeanFactory {
-    private static final Logger logger = LoggerFactory.getLogger(BeanFactory.class);
+public class BeanManager {
+    private static final Logger logger = LoggerFactory.getLogger(BeanManager.class);
 
     private EnvVariables env;
     private ChromeDriver chromeDriver;
@@ -34,6 +34,7 @@ public class BeanFactory {
     public EnvVariables env() {
         if (env == null) {
             env = new EnvVariables();
+            env.load();
         }
         return env;
     }
@@ -58,6 +59,7 @@ public class BeanFactory {
         }
         return gradableConverter;
     }
+
     public MessageConverter messageConverter() {
         if (messageConverter == null) {
             messageConverter = new MessageConverter();

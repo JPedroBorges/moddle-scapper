@@ -17,6 +17,9 @@ import java.time.temporal.ChronoField;
 import java.util.Locale;
 
 public class GradableConverter implements Converter<GradableDTO, Gradable> {
+
+    public static final LocalDateTime NOW = LocalDateTime.now();
+
     @Override
     public Gradable convert(GradableDTO dto) {
         String finalName;
@@ -60,6 +63,11 @@ public class GradableConverter implements Converter<GradableDTO, Gradable> {
                 .parseDefaulting(ChronoField.YEAR, LocalDate.now().getYear())
                 .toFormatter(Locale.forLanguageTag("pt"));
         finalDate = LocalDateTime.parse(dto.date(), formatter);
+
+        if (finalDate.isAfter(NOW)) {
+            finalDate = finalDate.minusYears(1);
+        }
+
         return finalDate;
     }
 

@@ -26,7 +26,7 @@ public class GradablesAction extends Actions {
         List<WebElement> btns = driver.findElements(By.className("btn"));
         Optional<WebElement> buttonToClick = btns.stream().filter(btn -> btn.getText().equals("Contrair/Expandir tudo")).findFirst();
         if (buttonToClick.isEmpty()) {
-            throw new DisplayGradesNotFound();
+            throw new DisplayGradesNotFound("Button \"Contrair/Expandir tudo\" could not be found.");
         }
         buttonToClick.get().click();
     }
