@@ -1,9 +1,9 @@
 package com.roomelephant.moopper.adapter.scrapper.converter.gradable;
 
-import com.roomelephant.moopper.model.Message;
 import com.roomelephant.moopper.adapter.scrapper.MessageDTO;
 import com.roomelephant.moopper.adapter.scrapper.converter.Converter;
 import com.roomelephant.moopper.adapter.scrapper.converter.ConverterExceptions;
+import com.roomelephant.moopper.model.Message;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -16,6 +16,9 @@ import java.time.temporal.ChronoField;
 import java.util.Locale;
 
 public class MessageConverter implements Converter<MessageDTO, Message> {
+
+    public static final LocalDateTime NOW = LocalDateTime.now();
+
     @Override
     public Message convert(MessageDTO dto) {
         String finalName;
@@ -56,9 +59,14 @@ public class MessageConverter implements Converter<MessageDTO, Message> {
         LocalDateTime finalDate;
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 .appendPattern("d 'de' MMMM 'de' yyyy 'às' HH:mm")
-                .parseDefaulting(ChronoField.YEAR, LocalDateTime.now().getYear())
+                .parseDefaulting(ChronoField.YEAR, NOW.getYear())
                 .toFormatter(Locale.forLanguageTag("pt"));
         finalDate = LocalDateTime.parse(dto.date().split(", ")[1], formatter);
+
+        if (finalDate.isAfter(NOW)) {
+            finalDate = finalDate.minusYears(1);
+        }
+
         return finalDate;
     }
 

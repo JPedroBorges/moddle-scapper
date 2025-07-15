@@ -20,6 +20,7 @@ public enum Colors {
     PURPLE_BACKGROUND("\u001B[45m"),
     CYAN_BACKGROUND("\u001B[46m"),
     WHITE_BACKGROUND("\u001B[47m"),
+    GRAY_BACKGROUND("\u001B[100m"),
 
     BOLD("\033[1m"),
     NORMAL("\033[0m"),
